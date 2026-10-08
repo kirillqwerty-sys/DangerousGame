@@ -111,6 +111,7 @@ public class Main {
                             break;
                         } else {
                             System.out.println("Решите задачу.");
+
                         }
                     } else {
                         System.out.println("Координаты не изменены");
@@ -122,7 +123,17 @@ public class Main {
 
 
                     if (personLive <= 0) {
-                        System.out.println("Закончились жизни. Итог: ...");
+                        int a = random.nextInt(100);
+                        int b = random.nextInt(100);
+                        int trueAnswer = a + b;
+                        System.out.println("Реши пример: " + a + " + " + b + " = ?");
+                        int ans = scanner.nextInt();
+                        if (trueAnswer == ans) {
+                            System.out.println("Верно! Ты победил монстра");
+                        } else {
+                            System.out.println("Ты проиграл эту битву!");
+                            personLive--;
+                        }
                     }
                 }
                 break;
