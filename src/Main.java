@@ -3,14 +3,12 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        String person = "\uD83E\uDDD9";
         String monster = "\uD83E\uDDDF";
         String castle = "\uD83C\uDFF0";
+        int sizeBoard = 5;
+        Person person = new Person(sizeBoard);
 
         int personLive = 3;
-        int sizeBoard = 5;
-        int personX;
-        int personY;
         int step = 0;
         int castleY = 1;
         Random random = new Random();
@@ -39,21 +37,8 @@ public class Main {
 
 
 
-        personX = 1 + sizeBoard / 2;
-        personY = 1 + sizeBoard / 2;
-        // \n, \t - спец символ
-        String gamingField = "+ —— + —— + —— + —— + —— +\n"
-                + "|    |    |    |    |    |\n"
-                + "+ —— + —— + —— + —— + —— +\n"
-                + "|    |    |    |    |    |\n"
-                + "+ —— + —— + —— + —— + —— +\n"
-                + "|    |    | " + monster + " |    |    |\n"
-                + "+ —— + —— + —— + —— + —— +\n"
-                + "|    |    |    |    |    |\n"
-                + "+ —— + —— + —— + —— + —— +\n"
-                + "| " + person + " |    |    |    |    |\n"
-                + "+ —— + —— + —— + —— + —— +";
-
+        person.x = 1 + random.nextInt(sizeBoard);
+        person.y = sizeBoard;
 
         System.out.println("Привет! Ты готов начать играть в игру? (Напиши: ДА или НЕТ)");
 
@@ -69,7 +54,7 @@ public class Main {
                 System.out.println("Выбранная сложность:\t" + difficultGame);
 
                 while (true) {
-                    board[personY - 1][personX - 1] = person;
+                    board[person.y - 1][person.x - 1] = person.image;
                     for (String[] row : board) {
                         System.out.println(wall);
 
@@ -85,25 +70,23 @@ public class Main {
                     System.out.println("Количество жизней:\t" + personLive + "\n");
 
                     System.out.println("Введите куда будет ходить персонаж (ход возможен только по вертикали и горизонтали на одну клетку)" +
-                            "\nКоординаты персонажа - (x: " + personX + ", y: " + personY + ")");
+                            "\nКоординаты персонажа - (x: " + person.x + ", y: " + person.y + ")");
 
                     int x = scanner.nextInt();
                     int y = scanner.nextInt();
 
                     System.out.println(x + ", " + y);
 
-                    if (x != personX && y != personY) {
+                    if (x != person.x&& y != person.y) {
                         System.out.println("Некорректный ход");
                     } else if (
-                            Math.abs(x - personX) == 1
-                                    || Math.abs(y - personY) == 1
+                            Math.abs(x - person.x) == 1
+                                    || Math.abs(y - person.y) == 1
                     ) {
                         if (board[y - 1][x - 1].equals("  ")) {
-                            board[personY - 1][personX - 1] = "  ";
-                            personX = x;
-                            personY = y;
+                            board[person.y - 1][person.x - 1] = "  ";
                             step++;
-                            System.out.println("Ход корректный; Новые координаты: " + personX + ", " + personY + "\nХод номер: " + step);
+                            System.out.println("Ход корректный; Новые координаты: " + person.x + ", " + person.y + "\nХод номер: " + step);
 
                         } else if (board[y - 1][x - 1].equals(castle)) {
                             System.out.println("Вы прошли игру!");
@@ -112,9 +95,7 @@ public class Main {
                             System.out.println("Решите задачу.");
                             //доп
                             if (taskMonster(difficultGame)) {
-                                board[personY - 1][personX - 1] = "  ";
-                                personX = x;
-                                personY = y;
+                                board[person.y - 1][person.x - 1] = "  ";
                                 step++;
                             } else {
                                 personLive--;
@@ -159,7 +140,7 @@ public class Main {
             }
         } else {
             //kod
-            return true;//удалить потом
+            return true;
         }
     }
 }
