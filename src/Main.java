@@ -5,8 +5,11 @@ public class Main {
     public static void main(String[] args) {
         String monster = "\uD83E\uDDDF";
         String castle = "\uD83C\uDFF0";
+
         int sizeBoard = 5;
         Person person = new Person(sizeBoard);
+
+
 
         int personLive = 3;
         int step = 0;
@@ -34,12 +37,6 @@ public class Main {
         board[castleY - 1][castleX - 1] = castle;
 
 
-
-
-
-        person.x = 1 + random.nextInt(sizeBoard);
-        person.y = sizeBoard;
-
         System.out.println("Привет! Ты готов начать играть в игру? (Напиши: ДА или НЕТ)");
 
         Scanner scanner = new Scanner(System.in);
@@ -54,7 +51,7 @@ public class Main {
                 System.out.println("Выбранная сложность:\t" + difficultGame);
 
                 while (true) {
-                    board[person.y - 1][person.x - 1] = person.image;
+                    board[person.getY()- 1][person.getX() - 1] = person.getImage();
                     for (String[] row : board) {
                         System.out.println(wall);
 
@@ -70,39 +67,39 @@ public class Main {
                     System.out.println("Количество жизней:\t" + personLive + "\n");
 
                     System.out.println("Введите куда будет ходить персонаж (ход возможен только по вертикали и горизонтали на одну клетку)" +
-                            "\nКоординаты персонажа - (x: " + person.x + ", y: " + person.y + ")");
+                            "\nКоординаты персонажа - (x: " + person.getX() + ", y: " + person.getY() + ")");
 
                     int x = scanner.nextInt();
                     int y = scanner.nextInt();
 
                     System.out.println(x + ", " + y);
 
-                    if (x != person.x&& y != person.y) {
+                    if (x != person.getX()&& y != person.getY()) {
                         System.out.println("Некорректный ход");
-                    } else if (
-                            Math.abs(x - person.x) == 1
-                                    || Math.abs(y - person.y) == 1
-                    ) {
-                        if (board[y - 1][x - 1].equals("  ")) {
-                            board[person.y - 1][person.x - 1] = "  ";
+                    } else if (person.isMoveCorrect(x,y)) {
+                        String next = board[y-1][x-1];
+                        if (next.equals("  ")) {
+                            board[person.getY() - 1][person.getX() - 1] = "  ";
+                            person.move(x,y);
                             step++;
-                            System.out.println("Ход корректный; Новые координаты: " + person.x + ", " + person.y + "\nХод номер: " + step);
+                            System.out.println("Ход корректный; Новые координаты: " + person.getX() + ", " + person.getY() + "\nХод номер: " + step);
 
-                        } else if (board[y - 1][x - 1].equals(castle)) {
-                            System.out.println("Вы прошли игру!");
+                        } else if (next.equals(castle)) {
+                            System.out.println("Вы прошли игру!Ура-Ура-Ура!!!!");
                             break;
                         } else {
                             System.out.println("Решите задачу.");
                             //доп
                             if (taskMonster(difficultGame)) {
-                                board[person.y - 1][person.x - 1] = "  ";
+                                board[person.getY() - 1][person.getX() - 1] = "  ";
+                                person.move(x,y);
                                 step++;
                             } else {
                                 personLive--;
                             }
                         }
                     } else {
-                        System.out.println("Координаты не изменены");
+                        System.out.println("Некорpектный ход");
                     }
 
                     if (personLive <= 0) {
@@ -137,6 +134,7 @@ public class Main {
             } else {
                 System.out.println("Ты проиграл эту битву!");
                 return false;
+
             }
         } else {
             //kod
