@@ -1,7 +1,8 @@
 import java.util.Random;
+import java.util.Scanner;
 
 public class Monster {
-    String image = "\uD83E\uDDDF";
+    private  String image = "\uD83E\uDDDF";
     private int x, y;
 
     Monster(int sizeBoard) {
@@ -25,29 +26,36 @@ public class Monster {
     public void setImage(String image) {
         this.image = image;
     }
+    public boolean conflictPerson(int personX, int personY) {
+        return personX == x && personY == y;
+    }
+
+    public boolean taskMonster(int difficultGame) {
+        System.out.println("Решите задачу:");
 
 
+        if (difficultGame == 1) {
+            Random random = new Random();
+            int a = random.nextInt(100);
+            int b = random.nextInt(100);
+            int trueAnswer = a + b;
+
+            System.out.println("Реши пример: " + a + " + " + b + " = ?");
+            Scanner scanner = new Scanner(System.in);
+            int answer = scanner.nextInt();
+
+            if (trueAnswer == answer) {
+                System.out.println("Верно! Ты победил монстра");
+                return true;
+            } else {
+                System.out.println("Ты проиграл эту битву!");
+                return false;
+            }
+        } else {
+            //  код
+            return false;
+        }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }
 }
