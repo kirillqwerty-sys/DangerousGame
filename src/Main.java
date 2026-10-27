@@ -52,11 +52,6 @@ public class Main {
             }
         }
 
-        for (int i = 0; i < countMonster; i++) {
-            Monster monster = new Monster(sizeBoard);
-            monsters[i] = monster;
-            board[monster.getY() - 1][monster.getX() - 1] = monster.getImage();
-        }
 
         board[castleY - 1][castleX - 1] = castle;
 
