@@ -1,8 +1,8 @@
 import java.util.Random;
 import java.util.Scanner;
 
-public class Monster {
-    private  String image = "\uD83E\uDDDF";
+public  class Monster {
+    private String image = "\uD83E\uDDDF";
     private int x, y;
 
     Monster(int sizeBoard) {
@@ -26,6 +26,7 @@ public class Monster {
     public void setImage(String image) {
         this.image = image;
     }
+
     public boolean conflictPerson(int personX, int personY) {
         return personX == x && personY == y;
     }
@@ -58,4 +59,5 @@ public class Monster {
 
 
     }
+
 }

@@ -11,7 +11,6 @@ public class Main {
 
 
 
-
         int step = 0;
         int castleY = 1;
         Random random = new Random();
@@ -36,10 +35,16 @@ public class Main {
         while (count < countMonster) {
             Monster monster;
 
-            if (random.nextBoolean()) {
-                monster = new Monster(sizeBoard);
-            } else {
+
+            int type = 1 + random.nextInt(3);
+
+            if (type == 1) {
+                monster = new GhostMonster(sizeBoard);
+            } else if (type == 2) {
                 monster = new BigMonster(sizeBoard);
+            } else {
+                // type == 3
+                monster = new Monster(sizeBoard);
             }
 
             int row = monster.getY() - 1;
